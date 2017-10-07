@@ -1,20 +1,46 @@
-/* jshint ignore:start */
-
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
+import TextExample from './Components/TextExample'
+import ImageExample from './Components/ImageExample'
 import { 
   StyleSheet, 
   Text, 
   View, 
   Image,
   Button,
+  TouchableHighlight
 } from 'react-native';
 
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 12
+    flex: 1,
+    marginTop: 15,
+    flexDirection: 'column',
+    padding: 10
   },
+  logo: {
+    width: 200,
+    height: 200,
+    borderRadius: 100
+  },
+  welcomeContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    alignContent: 'flex-start'
+  },
+  searchInput: {
+    height: 50,
+    padding: 4,
+    marginRight: 5,
+    fontSize: 23,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 8,
+    color: 'white'
+},
   picContainer: {
     display: 'flex',
     flexGrow: 1,
@@ -25,32 +51,66 @@ const styles = StyleSheet.create({
   picItem: {
     width: 200,
     height: 200
+  },
+  block1: {
+    flex: 1,
+    height: 100,
+    width: 100,
+    backgroundColor: 'powderblue'
+  },
+  block2: {
+    flex: 2,
+    height: 100,
+    width: 100,
+    backgroundColor: 'red'
+  },
+  block3: {
+    flex: 3,
+    height: 100,
+    width: 100,
+    backgroundColor: 'green'
+  },
+  block4: {
+    flex: 4,
+    height: 100,
+    width: 100,
+    backgroundColor: 'purple'
   }
 });
-
 
 class Welcome extends React.Component {
   static navigationOptions = {
     title: 'My First React App',
     headerTintColor: 'red'
   };
+  
+  handleChange() {
+    
+  }
+  
   render() {
+    const logo = { uri: 'http://axelvaldez.mx/assets/media/work/nearsoft-workshops.png' }; 
     const { navigate } = this.props.navigation;
     return (
-      <View>
-        <Text>Hello, im the Navigation</Text>
-        <Button
-          onPress={() => navigate('ChatScreen')}
-          title="My chat holis"/>
-        <Button
-          onPress={() => navigate('MyPics')}
-          title="My Pics"/>
-      </View>      
+      <View style={styles.welcomeContainer}>
+        <Logo src={logo}/>
+        <TouchableHighlight>
+          style={styles.searchInput}
+          underlayColor='white'
+          onPress={this.handleChange.bind(this)}
+        </TouchableHighlight>
+      </View>   
     );
   }
 };
 
-
+class Logo extends React.Component {
+  render() {
+    return(
+      <Image source={this.props.src} style={styles.logo}/>
+    )
+  }
+}
 
 class ChatScreen extends React.Component {
   static navigationOptions = {
@@ -104,51 +164,3 @@ export default class App extends React.Component {
     return <MyApp style={styles.container}/>;
   }
 }
-
-
-
-// export default class App extends React.Component {
-//   var navigationOptions = {
-//     title: 'Welcome'
-//   };
-//   render() {
-//     var  { navigate } = this.props.navigation;
-//     let pic = {
-//       uri: 'http://i0.kym-cdn.com/entries/icons/original/000/003/549/Dolan.jpg'
-//     };
-//     
-//     let size = {
-//       w: 100,
-//       h: 100
-//     };
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.title}>Goobys pls</Text>
-//         <Doland pic={pic} width={size.w} height={size.h}></Doland>
-//         <Text> Have a nice day </Text>
-//       </View>
-//     );
-//   }
-// }
-// 
-// class Doland extends Component {
-//   render() {
-//     return (
-//       <Image source={this.props.pic} style={{ width: this.props.width, height: this.props.height}}/>
-//     );
-//   }
-// }
-// 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   title: {
-//     fontSize: 30,
-//     color: 'red'
-//   }
-// });
-/* jshint ignore:end */
