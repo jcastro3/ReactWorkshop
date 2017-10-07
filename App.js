@@ -1,3 +1,5 @@
+/* jshint ignore:start */
+
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import TextExample from './Components/TextExample'
@@ -8,21 +10,19 @@ import {
   View, 
   Image,
   Button,
+  TextInput,
   TouchableHighlight
 } from 'react-native';
 
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 15,
-    flexDirection: 'column',
-    padding: 10
   },
   logo: {
     width: 200,
     height: 200,
-    borderRadius: 100
+    borderRadius: 100,
+    marginBottom: 20
   },
   welcomeContainer: {
     flexDirection: 'column',
@@ -33,14 +33,31 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     height: 50,
-    padding: 4,
-    marginRight: 5,
+    padding: 10,
+    margin: 10,
     fontSize: 23,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#fa3635',
     borderRadius: 8,
-    color: 'white'
-},
+    color: 'black',
+    alignSelf: 'stretch'
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#111',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 45,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    margin: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
   picContainer: {
     display: 'flex',
     flexGrow: 1,
@@ -79,13 +96,28 @@ const styles = StyleSheet.create({
 });
 
 class Welcome extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      isLoading: false,
+      error: false
+    };
+  }
   static navigationOptions = {
     title: 'My First React App',
-    headerTintColor: 'red'
+    headerTintColor: '#fa3635'
   };
   
-  handleChange() {
+  handleSubmit() {
     
+  }
+  
+  handleChange(event) {
+    this.setState({
+      username: event.nativeEvent.text
+    });
   }
   
   render() {
@@ -94,10 +126,15 @@ class Welcome extends React.Component {
     return (
       <View style={styles.welcomeContainer}>
         <Logo src={logo}/>
-        <TouchableHighlight>
+          <TextInput
           style={styles.searchInput}
+          value={this.state.username}
+          onChange={this.handleChange.bind(this)}/>
+        <TouchableHighlight
+          style={styles.button}
           underlayColor='white'
-          onPress={this.handleChange.bind(this)}
+          onPress={this.handleSubmit.bind(this)}>
+            <Text style={styles.buttonText}> SEARCH </Text>
         </TouchableHighlight>
       </View>   
     );
@@ -112,51 +149,9 @@ class Logo extends React.Component {
   }
 }
 
-class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'My chat',
-    headerTintColor: 'blue'
-  };
-  render() {
-    return (
-      <View>
-        <Text> This is my chat box! :D </Text>
-      </View>      
-    );
-  }
-};
-
-class MyPics extends React.Component {
-  static navigationOptions = {
-    title: 'My Pic Files',
-    headerTintColor: 'green'
-  };
-  
-  printImages(images) {
-    return images.map((image, idx) => <Image key={idx} source={image} style={styles.picItem}/> );
-  }
-  
-  render() {
-    let pics = [
-      { uri: 'http://cdn.cavemancircus.com//wp-content/uploads/images/2013/april/sloth/sloth_lol_14.jpg'},
-      { uri: 'http://www.qygjxz.com/data/out/193/5485088-random-image.png'},
-      { uri: 'https://www.newton.ac.uk/files/covers/968361.jpg'},
-      { uri: 'https://ugc.kn3.net/i/origin/http://www.thedesignwork.com/wp-content/uploads/2011/10/Random-Pictures-of-Conceptual-and-Creative-Ideas-02.jpg'},
-      { uri: 'https://steamuserimages-a.akamaihd.net/ugc/780658011420073542/D0A3409F1A9ED4C370840B45E3AE48FC2A9D1C34/'}      
-    ];
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.picContainer}>
-        {this.printImages(pics)}
-      </View>
-      )
-    }
-};
 
 const MyApp = StackNavigator({
-  Welcome: { screen: Welcome },
-  ChatScreen: { screen: ChatScreen },
-  MyPics: { screen: MyPics }
+  Welcome: { screen: Welcome }
 });
 
 export default class App extends React.Component {
@@ -164,3 +159,4 @@ export default class App extends React.Component {
     return <MyApp style={styles.container}/>;
   }
 }
+/* jshint ignore:end */
